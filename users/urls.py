@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django.urls import path
+from users import views
 
 urlpatterns = [
-    path('login/', admin.site.urls),
-    path('signup/',)
+    path('signup/', views.handle_signup),
+    path('login/', views.handle_login)
 ]
