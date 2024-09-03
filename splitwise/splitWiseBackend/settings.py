@@ -28,6 +28,13 @@ DEBUG = True
 ALLOWED_HOSTS = []
 AUTH_USER_MODEL = 'users.CustomUser'
 
+# CORS_ALLOWED_ORIGINS = [
+#     'http://localhost:3000',  # Your Next.js frontend URL
+# ]
+#
+# CSRF_TRUSTED_ORIGINS = [
+#     'http://localhost:3000',  # Your Next.js frontend URL
+# ]
 
 # Application definition
 
@@ -42,6 +49,11 @@ INSTALLED_APPS = [
 
     # 'rest_framework',
 
+    # other apps
+    'corsheaders',
+    'django.contrib.sessions',
+    # other apps
+
 ]
 
 MIDDLEWARE = [
@@ -52,6 +64,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'splitWiseBackend.urls'

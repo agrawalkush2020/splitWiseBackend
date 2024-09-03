@@ -1,8 +1,9 @@
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse, JsonResponse
 import json
 from django.contrib.auth.hashers import make_password
 from django.views.decorators.csrf import csrf_exempt
 from .models import CustomUser
+from django.contrib.auth import authenticate, login, logout
 
 @csrf_exempt
 def handle_signup(request):
@@ -19,11 +20,10 @@ def handle_signup(request):
 
         # Check if user already exists
         if CustomUser.is_existing_user(username=username, email=email, phone_number=phone_number):
-            return HttpResponse(
-                json.dumps({"success": False, "message": "User Already Exists!"}),
-                content_type="application/json"
-            )
-            # Create new user
+            return HttpResponse(json.dumps({"success": False, "message": "User Already Exists!"}),
+                                content_type="application/json")
+
+        # Create new user
         new_user = CustomUser(
             username=username,
             email=email,
@@ -32,17 +32,46 @@ def handle_signup(request):
             password=make_password(password)  # Ensure you hash the password
         )
         new_user.save()
-        return HttpResponse(
-            json.dumps({"success": True, "message": "User created successfully!"}),
-            content_type="application/json"
-        )
+        return HttpResponse(json.dumps({"success": True}),
+                            content_type="application/json")
 
-    return HttpResponse(
-        json.dumps({"success": False, "message": "Invalid request method"}),
-        content_type="application/json"
-    )
+    return HttpResponse(json.dumps({"success": False, "message": "Invalid request method"}),
+                        content_type="application/json")
 
 
+@csrf_exempt
 def handle_login(request):
-    return HttpResponse(json.dumps({"success":True}),content_type="application/json")
-    # return Response({'name':'kushagra'},status=status.HTTP_200_OK)
+    if request.method == "POST":
+        credentials = json.loads(request.body)
+
+        # Extract credentials
+        username = credentials.get('userName')
+        password = credentials.get('password')
+
+        # Check if user already exists
+        if CustomUser.is_existing_user(username=username) is False:
+            return HttpResponse(json.dumps({"success": False, "message": "Wrong Username !!"}),
+                                content_type="application/json")
+
+        # agr credentials match krgye toh user ka object return otherwise None return hoga
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return HttpResponse(json.dumps({"success": True,'message': 'Login successful', 'user': user.username}),
+                                content_type="application/json", status=200)
+        else:
+            return HttpResponse(json.dumps({"success": False, 'message': 'Invalid Password!'}),
+                                content_type="application/json", status=401)
+
+    # when request method is not Post
+    else:
+        response_data = json.dumps({"success": False,'message': 'Invalid request method'})
+        return HttpResponse(response_data, content_type="application/json", status=405)
+
+
+
+
+def logout_view(request):
+    logout(request)
+    return HttpResponse(json.dumps({"success": True}), content_type="application/json", status=200)
