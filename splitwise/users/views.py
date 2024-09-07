@@ -58,7 +58,7 @@ def handle_login(request):
 
         if user is not None:
             login(request, user)
-            return HttpResponse(json.dumps({"success": True,'message': 'Login successful', 'user': user.username}),
+            return HttpResponse(json.dumps({"success": True, 'user': user.username}),
                                 content_type="application/json", status=200)
         else:
             return HttpResponse(json.dumps({"success": False, 'message': 'Invalid Password!'}),
@@ -66,6 +66,7 @@ def handle_login(request):
 
     # when request method is not Post
     else:
+        print(f'{request.method}')
         response_data = json.dumps({"success": False,'message': 'Invalid request method'})
         return HttpResponse(response_data, content_type="application/json", status=405)
 

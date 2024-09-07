@@ -25,47 +25,37 @@ SECRET_KEY = 'django-insecure-5-pzmneu&di0x4quj5w)-5vq%=1w!ju73@ct5lgz@6^s@ts23-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 AUTH_USER_MODEL = 'users.CustomUser'
 
-# CORS_ALLOWED_ORIGINS = [
-#     'http://localhost:3000',  # Your Next.js frontend URL
-# ]
-#
-# CSRF_TRUSTED_ORIGINS = [
-#     'http://localhost:3000',  # Your Next.js frontend URL
-# ]
+CORS_ALLOWED_ORIGINS = [
+    'http://127.0.0.1:3000',
+    'http://localhost:3000',
+    'https://yoursite.com',  # Ensure this is a valid URL
+]
 
 # Application definition
 
 INSTALLED_APPS = [
     'users',
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    # 'rest_framework',
-
-    # other apps
-    'corsheaders',
-    'django.contrib.sessions',
-    # other apps
-
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # Ensure this is high in the list
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'splitWiseBackend.urls'
@@ -140,3 +130,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Ensure the session cookie is secure
+# SESSION_COOKIE_SECURE = False  # Only send cookies over HTTPS
+# SESSION_COOKIE_HTTPONLY = True  # Prevent JavaScript from accessing the cookie
+# SESSION_COOKIE_SAMESITE = 'Lax'  # Helps protect against CSRF attacks
