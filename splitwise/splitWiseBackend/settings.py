@@ -25,15 +25,31 @@ SECRET_KEY = 'django-insecure-5-pzmneu&di0x4quj5w)-5vq%=1w!ju73@ct5lgz@6^s@ts23-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 AUTH_USER_MODEL = 'users.CustomUser'
 
 CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
     'http://127.0.0.1:3000',
     'http://localhost:3000',
     'https://yoursite.com',  # Ensure this is a valid URL
 ]
+CORS_ALLOW_CREDENTIALS = True
 
+CORS_ALLOW_HEADERS = [
+    'content-type',
+    'accept',
+    'X-Requested-With',
+    'Authorization',
+]
+
+CORS_ALLOW_METHODS = [
+    'GET',
+    'POST',
+    'OPTIONS',
+    'PUT',
+    'DELETE',
+]
 # Application definition
 
 INSTALLED_APPS = [
@@ -48,9 +64,9 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # Ensure this is high in the list
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',  # Ensure this is high in the list
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -130,8 +146,9 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+CORS_ORIGIN_ALLOW_ALL = False
 
-# Ensure the session cookie is secure
-# SESSION_COOKIE_SECURE = False  # Only send cookies over HTTPS
-# SESSION_COOKIE_HTTPONLY = True  # Prevent JavaScript from accessing the cookie
-# SESSION_COOKIE_SAMESITE = 'Lax'  # Helps protect against CSRF attacks
+# Optional settings related to cookies
+SESSION_COOKIE_HTTPONLY = False   # isse hum frontend pr bhi access kr payenge session ko
+SESSION_COOKIE_SECURE = False  # Change to True if using HTTPS
+SESSION_COOKIE_SAMESITE = 'Lax'

@@ -62,7 +62,7 @@ def handle_login(request):
                                 content_type="application/json", status=200)
         else:
             return HttpResponse(json.dumps({"success": False, 'message': 'Invalid Password!'}),
-                                content_type="application/json", status=401)
+                                content_type="application/json", status=200)
 
     # when request method is not Post
     else:
@@ -72,7 +72,7 @@ def handle_login(request):
 
 
 
-
-def logout_view(request):
+@csrf_exempt
+def handle_logout(request):
     logout(request)
     return HttpResponse(json.dumps({"success": True}), content_type="application/json", status=200)
