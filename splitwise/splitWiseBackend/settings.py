@@ -55,6 +55,7 @@ CORS_ALLOW_METHODS = [
 INSTALLED_APPS = [
     'users',
     'groups',
+    'transactions',
     'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',

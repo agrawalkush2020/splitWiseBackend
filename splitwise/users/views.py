@@ -80,10 +80,9 @@ def handle_logout(request):
 
 @csrf_exempt
 def fetch_all_users(request):
-    # Fetch all users except superusers
-    users = CustomUser.objects.filter(is_superuser=False)
     # Get the current logged-in user's username
     current_username = request.user.username
-
+    # Fetch all users except superusers and the current logged-in user
+    users = CustomUser.objects.filter(is_superuser=False).exclude(username=current_username).values_list('username', flat=True)
     return JsonResponse({'success':True,'users':users,'current_username':current_username},status=200)
 
