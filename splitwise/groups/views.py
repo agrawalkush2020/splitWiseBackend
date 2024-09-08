@@ -14,6 +14,19 @@ def get_group_list(request):
 
     return HttpResponse(json.dumps({"success": True, "groups": groups}), content_type="application/json")
 
+def make_group(request):
+    user = request.user
+
+    if request.method == "POST":
+        credentials = json.loads(request.body)
+
+        # Extract credentials
+        name = credentials.get('groupName')
+        user_names = credentials.get('userNames')
+
+
+
+
 
 
 

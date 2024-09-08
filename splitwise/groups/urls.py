@@ -3,4 +3,5 @@ from groups import views
 
 urlpatterns = [
     path('', views.get_group_list),
+
 ]
