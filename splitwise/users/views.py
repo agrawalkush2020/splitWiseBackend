@@ -76,3 +76,14 @@ def handle_login(request):
 def handle_logout(request):
     logout(request)
     return HttpResponse(json.dumps({"success": True}), content_type="application/json", status=200)
+
+
+@csrf_exempt
+def fetch_all_users(request):
+    # Fetch all users except superusers
+    users = CustomUser.objects.filter(is_superuser=False)
+    # Get the current logged-in user's username
+    current_username = request.user.username
+
+    return JsonResponse({'success':True,'users':users,'current_username':current_username},status=200)
+
