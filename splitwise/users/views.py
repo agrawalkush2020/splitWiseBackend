@@ -49,9 +49,9 @@ def handle_login(request):
         password = credentials.get('password')
 
         # Check if user already exists
-        if CustomUser.is_existing_user(username=username) is False:
-            return HttpResponse(json.dumps({"success": False, "message": "Wrong Username !!"}),
-                                content_type="application/json")
+        # if CustomUser.is_existing_user(username=username) is False:
+        #     return HttpResponse(json.dumps({"success": False, "message": "Wrong Username !!"}),
+        #                         content_type="application/json")
 
         # agr credentials match krgye toh user ka object return otherwise None return hoga
         user = authenticate(request, username=username, password=password)

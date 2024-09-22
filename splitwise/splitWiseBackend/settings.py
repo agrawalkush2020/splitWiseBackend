@@ -148,9 +148,16 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-CORS_ORIGIN_ALLOW_ALL = False
+# CORS_ORIGIN_ALLOW_ALL = False
+
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 30  # 30 days
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False  # Don't expire when the browser is closed
 
 # Optional settings related to cookies
 SESSION_COOKIE_HTTPONLY = False   # isse hum frontend pr bhi access kr payenge session ko
 SESSION_COOKIE_SECURE = False  # Change to True if using HTTPS
-SESSION_COOKIE_SAMESITE = 'Lax'
+# SESSION_COOKIE_SAMESITE = 'Lax'
+
+# settings.py in Django
+SESSION_COOKIE_DOMAIN = None  # Set this if using subdomains
+SESSION_COOKIE_PATH = '/'     # Ensure the path covers the entire application

@@ -10,9 +10,6 @@ class Group(models.Model):
     def __str__(self):
         return self.name  # Corrected 'self.username' to 'self.name'
 
-    class Meta:
-        ordering = ['name']  # Example: order groups by name
-
 
 class GroupMembership(models.Model):
     group = models.ForeignKey(Group, on_delete=models.CASCADE)  # References Group model
