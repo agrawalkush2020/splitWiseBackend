@@ -154,7 +154,7 @@ SESSION_COOKIE_AGE = 60 * 60 * 24 * 30  # 30 days
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False  # Don't expire when the browser is closed
 
 # Optional settings related to cookies
-SESSION_COOKIE_HTTPONLY = False   # isse hum frontend pr bhi access kr payenge session ko
+SESSION_COOKIE_HTTPONLY = True   # isse hum frontend pr bhi access kr payenge session ko
 SESSION_COOKIE_SECURE = False  # Change to True if using HTTPS
 # SESSION_COOKIE_SAMESITE = 'Lax'
 
